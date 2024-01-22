@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise Example</title>
+</head>
+
+<body>
+  <style>
+    #colorChangingDiv {
+      position: absolute;
+    }
+  </style>
+  <div id="colorChangingDiv" style="overflow:auto; height:400px; width: 100px; height: 100px; background-color: green;">
+  </div>
+
+  <script>
+    function changeColorAfterDelay(delay, newColor) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          document.getElementById("colorChangingDiv").style.backgroundColor = newColor;
+          resolve("La couleur de la div a été changée avec succès !");
+        }, delay);
+      });
+    }
+
+    // Utilisation de la promesse
+    const delayTime = 2000; // Délai de 2 secondes
+    const targetColor = "red";
+    function hello() {
+      let x = Number.parseInt(document.getElementById("colorChangingDiv").style.left);
+      x = x - 2;
+      let move = x.toString() + "px";
+      console.log(move);
+      document.getElementById("colorChangingDiv").style.left = move;
+
+      //document.getElementById("colorChangingDiv").innerText+="Hello";
+    }
+
+    function stop(idInterval) {
+      console.log(idInterval);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          clearInterval(idInterval);
+        }, 5000);
+      });
+    }
+
+    console.log("Appel du changement de couleur après 2s");
+    changeColorAfterDelay(delayTime, targetColor)
+      .then((message) => {
+        console.log(message);
+        document.getElementById("colorChangingDiv").style.left = "100px";
+        return "Deplacement OK";
+      }).then(
+        (msg) => {
+          console.log(msg);
+          var debut = setInterval(hello, 100);
+          console.log(debut);
+          return debut;
+        }
+      ).then((id) => { stop(id); })
+      .catch((error) => {
+        console.error(error);
+      });
+    // clearInterval(stop);
+  </script>
+
+</body>
+
+</html>

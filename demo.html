@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Créez une fonction qui retourne une promesse
+        function asyncOperation(success = true) {
+            return new Promise((resolve, reject) => {
+                // Simulez une opération asynchrone, par exemple, une requête HTTP
+                setTimeout(function(){ 
+                    if (success) {
+                        resolve("La promesse a été résolue avec succès !");
+                    } else {
+                        reject("La promesse a échoué !");
+                    }
+                }, 2000); // Simule un délai de 2 secondes
+            });
+        }
+
+        // Utilisez la promesse créée
+        asyncOperation(false)
+            .then((result) => {
+                console.log(result);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    </script>
+</body>
+
+</html>
